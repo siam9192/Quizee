@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+    --color-primary:rgb(87, 53, 225);
+    --color-secondary:rgb(87, 85, 254);
+    --color-info:rgb(100, 32, 170);
+    ---color-error:rgb(255, 0, 0);
+    --color-dark:rgb(7, 15, 43);
+    --color-dark-secondary:rgb(10, 15, 18);
+    --font-primary:  "Fredoka", "sans-serif";
+    --font-secondary: "Roboto", "sans-serif";
+}
+
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+
+body{
+    font-family:"Fredoka", "sans-serif";
+}
+button:hover{
+    cursor: pointer;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar {
+ display: none;
+}
