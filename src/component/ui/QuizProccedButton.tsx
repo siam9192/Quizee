@@ -31,7 +31,12 @@ const QuizProccedButton = (props:IProps) => {
 
   const navigate = useNavigate();
 
-  // const isDisabled = 
+  const handelStartQuiz = ()=>{
+    const searchParams =  new URLSearchParams()
+    // searchParams.append()
+    navigate('/quiz')
+  }
+
   return (
   <>
     <button  onClick={()=>setIsOpen(true)} className="px-6 py-3 text-lg hover:bg-secondary bg-primary text-white rounded-full mx-auto">
@@ -40,7 +45,7 @@ const QuizProccedButton = (props:IProps) => {
           {
             isOpen ?
             <div onClick={()=>setIsOpen(false)} className='bg-gray-900/20 fixed inset-0 flex  justify-center items-center'>
-               <div onClick={(e)=>e.stopPropagation()} className=' w-[90%] md:w-10/12 lg:w-[60%] bg-white dark:bg-dark-secondary min-h-60 rounded-lg drop-shadow-2xl space-y-4 p-10 '>
+               <div onClick={(e)=>e.stopPropagation()} className=' w-[90%] md:w-10/12 lg:w-[60%]  max-w-7xl bg-white dark:bg-dark-secondary min-h-60 rounded-lg drop-shadow-2xl space-y-4 p-10 '>
                <div  className='md:grid   grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3  break-words md:block hidden'>
                 <div className='p-4 border-2 rounded-lg border-secondary bg-gray-100 dark:bg-dark'>
                   <h2 className='font-medium text-gray-800 dark:text-gray-100'>Category</h2>
@@ -62,9 +67,9 @@ const QuizProccedButton = (props:IProps) => {
                 </div>
                
                 <div className='p-4 border-2 rounded-lg border-secondary bg-gray-100 dark:bg-dark'>
-                  <h2 className='font-medium text-gray-800 dark:text-gray-100'>Time</h2>
+                  <h2 className='font-medium text-gray-800 dark:text-gray-100'>Time </h2>
                   <p className='text-center text-xl font-medium dark:text-gray-200'>
-                    {props.timeMinutes}
+                    {props.timeMinutes} Minutes
                   </p>
                 </div>
               </div>
@@ -99,7 +104,7 @@ const QuizProccedButton = (props:IProps) => {
       <button  className='px-6 py-3 text-primary  border-primary border-2 font-semibold rounded-lg  disabled:border-gray-700/20 disabled:text-gray-700'>
        Cancel
         </button>
-        <button onClick={()=>navigate('/quiz')}  className='px-6 py-3 text-white   bg-primary   font-semibold rounded-lg disabled:bg-gray-700/20 disabled:text-gray-700 '>
+        <button onClick={handelStartQuiz}  className='px-6 py-3 text-white   bg-primary   font-semibold rounded-lg disabled:bg-gray-700/20 disabled:text-gray-700 '>
        Start Quiz
         </button>
        </div>
