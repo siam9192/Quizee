@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { EDifficulty, TDifficulty } from '../../types/util.type'
 import { useNavigate } from 'react-router-dom'
+import { ICategory } from '../../types/category.type'
 
 interface IProps {
-  category:string|null,
+  category:ICategory|null,
   difficulty:TDifficulty,
   totalQuestions?:number,
   timeMinutes:number
@@ -29,18 +30,23 @@ const QuizProccedButton = (props:IProps) => {
     else  document.body.style.overflow = ""
   },[isOpen])
 
+  
+  
   const navigate = useNavigate();
 
   const handelStartQuiz = ()=>{
     const searchParams =  new URLSearchParams()
-    // searchParams.append()
-    navigate('/quiz')
+    searchParams.append("category",(props.category!.id).toString()!)
+    searchParams.append("category",props.difficulty.toLowerCase()!)
+    navigate(`/quiz?${searchParams.toString()}`)
   }
 
   return (
   <>
-    <button  onClick={()=>setIsOpen(true)} className="px-6 py-3 text-lg hover:bg-secondary bg-primary text-white rounded-full mx-auto">
-    Procced
+    <button  onClick={()=>setIsOpen(true)} 
+    disabled={!props.category}
+    className="px-6 py-3 text-lg hover:bg-secondary bg-primary text-white rounded-full mx-auto disabled:bg-gray-300 disabled:text-gray-600 ">
+    Go Ahead
      </button>
           {
             isOpen ?
@@ -50,7 +56,7 @@ const QuizProccedButton = (props:IProps) => {
                 <div className='p-4 border-2 rounded-lg border-secondary bg-gray-100 dark:bg-dark'>
                   <h2 className='font-medium text-gray-800 dark:text-gray-100'>Category</h2>
                   <p className='text-center text-xl font-medium dark:text-gray-200'>
-                    {props.category}
+                    {props.category!.name}
                   </p>
                 </div>
                 <div className='p-4 border-2 rounded-lg border-secondary bg-gray-100 dark:bg-dark'>
@@ -74,7 +80,7 @@ const QuizProccedButton = (props:IProps) => {
                 </div>
               </div>
               <div className=' flex  items-center flex-wrap gap-2 space-y-2 md:hidden'>
-        <h2 className='text-xl font-medium dark:text-gray-50'>Category: <span className='text-secondary'>{props.category}</span></h2>
+        <h2 className='text-xl font-medium dark:text-gray-50'>Category: <span className='text-secondary'>{props.category!.id}</span></h2>
         <h2 className='text-xl font-medium dark:text-gray-50'>Difficulty: <span className='text-secondary'>{props.difficulty}</span></h2>
      
         <h2 className='text-xl font-medium dark:text-gray-50'>Questions : <span className='text-secondary'>{props.totalQuestions}</span></h2>

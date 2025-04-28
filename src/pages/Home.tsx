@@ -1,113 +1,18 @@
 import Container from "../component/container/Container"
-import { GiBrain, GiElephant, GiFeather, GiHotMeal, GiMaterialsScience, GiMinotaur, GiMusicalNotes, GiWorld } from "react-icons/gi";
 import QuizProccedButton from "../component/ui/QuizProccedButton";
 import { EDifficulty, TDifficulty } from "../types/util.type";
 import { useRef, useState } from "react";
-import { MdBrush, MdLiveTv, MdLocalMovies, MdOutlineComputer, MdOutlineSportsHandball } from "react-icons/md";
-import { BsClockHistory } from "react-icons/bs";
-import {PiMathOperationsFill} from"react-icons/pi"
+
+import { categories } from "../utils/constant";
+import { ICategory } from "../types/category.type";
 const Home = () => {
-  const categories = [
-    {
-      name: "General Knowledge",
-      description: "Test your knowledge across a wide range of topics.",
-      themeColor: "#3b82f6", // blue,
-      icon:GiBrain
-    },
-    {
-      name: "Science & Nature",
-      description: "Explore the wonders of physics, biology, and beyond.",
-      themeColor: "#22c55e", // green,
-      icon:GiMaterialsScience
-    },
-    {
-      name: "History",
-      description: "Dive into historical events, leaders, and milestones.",
-      themeColor: "#a855f7", // purple
-      icon:BsClockHistory
-    },
-    {
-      name: "Entertainment",
-      description: "Movies, music, TV shows, and pop culture quizzes.",
-      themeColor: "#f59e0b", // amber,
-      icon:MdLiveTv
-    },
-    {
-      name: "Sports",
-      description: "Challenges on athletes, teams, and sports trivia.",
-      themeColor: "#ef4444", // red
-      icon:MdOutlineSportsHandball
-    },
-    {
-      name: "Geography",
-      description: "Test your knowledge of countries, capitals, and landmarks.",
-      themeColor: "#0ea5e9", // sky blue
-      icon: GiWorld
-    },
-    {
-      name: "Literature",
-      description: "Dive into famous books, authors, and literary works.",
-      themeColor: "#f97316", // orange
-      icon: GiFeather
-    },
-    {
-      name: "Art & Design",
-      description: "Quizzes about art history, design, and famous artists.",
-      themeColor: "#e11d48", // rose
-      icon: MdBrush
-    },
-    {
-      name: "Technology",
-      description: "Questions on tech innovations, gadgets, and pioneers.",
-      themeColor: "#14b8a6", // teal
-      icon: MdOutlineComputer
-    },
-    {
-      name: "Mathematics",
-      description: "Solve problems and explore the world of numbers.",
-      themeColor: "#8b5cf6", // violet
-      icon: PiMathOperationsFill
-    },
-    {
-      name: "Food & Drink",
-      description: "Trivia about cuisines, dishes, and culinary arts.",
-      themeColor: "#facc15", // yellow
-      icon: GiHotMeal
-    },
-    {
-      name: "Movies",
-      description: "Test your memory of movie plots, directors, and stars.",
-      themeColor: "#ec4899", // pink
-      icon: MdLocalMovies
-    },
-    {
-      name: "Music",
-      description: "Questions about songs, genres, and famous musicians.",
-      themeColor: "#10b981", // emerald
-      icon: GiMusicalNotes
-    },
-    {
-      name: "Mythology",
-      description: "Explore myths and legends from around the world.",
-      themeColor: "#c026d3", // fuchsia
-      icon: GiMinotaur
-    },
-    {
-      name: "Animals",
-      description: "Fascinating facts and trivia about the animal kingdom.",
-      themeColor: "#22d3ee", // cyan
-      icon: GiElephant
-    }
-  ];
+ 
 
 
   const ref = useRef<HTMLDivElement>(null)
 
-  const [selectedCategory,setSelectedCategory] =  useState<string|null>(null)
+  const [selectedCategory,setSelectedCategory] =  useState<ICategory|null>(null)
   const [selectedDifficulty,setSelectedDifficulty] =  useState<TDifficulty>(EDifficulty.EASY)
-   
-
-  
   
   return (
     <div>
@@ -117,9 +22,9 @@ const Home = () => {
       {
         categories.map((category,index)=>(
           <div key={index} onClick={()=>{
-            setSelectedCategory(category.name)
+            setSelectedCategory(category)
             ref.current?.scrollIntoView({behavior:'smooth',block:'start'})
-          }} className={`md:p-5 p-2 pb-10  rounded-t-3xl ${selectedCategory === category.name? 'outline-4 outline-offset-8  outline-secondary': null}`}
+          }} className={`md:p-5 p-2 hover:cursor-pointer pb-10  rounded-t-3xl ${selectedCategory?.id === category.id? 'outline-4 outline-offset-8  outline-secondary': null}`}
           style={{
             backgroundColor: category.themeColor,
             boxShadow: `0px 1px 4px 0px ${category.themeColor}`

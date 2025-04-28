@@ -1,8 +1,12 @@
+import { IQuizQuestion } from "../../types/question.type"
 import Container from "../container/Container"
 import QuizResultAnswers from "./QuizResultAnswers"
+interface IProps {
+  questions:IQuizQuestion[],
+  userAnswers:string[]
+}
 
-
-const QuizResult = () => {
+const QuizResult = (props:IProps) => {
 
   const images = {
     great:"https://cdni.iconscout.com/illustration/premium/thumb/best-student-illustration-download-in-svg-png-gif-file-formats--online-education-award-reward-educational-trophy-pack-school-illustrations-5761550.png",
@@ -10,6 +14,9 @@ const QuizResult = () => {
     average:"https://cdni.iconscout.com/illustration/premium/thumb/girl-passed-exam-illustration-download-in-svg-png-gif-file-formats--online-result-award-reward-certificate-education-pack-school-illustrations-5761551.png",
     fail:"https://cdni.iconscout.com/illustration/premium/thumb/depressed-boy-showing-his-exam-results-illustration-download-in-svg-png-gif-file-formats--failure-student-failed-books-study-set-01-pack-school-education-illustrations-8041538.png"
   }
+
+  const totalCorrectAnswers =  props.questions.map((_,index)=>_.correct_answer === props.userAnswers[index]).filter(_=>_).length;
+
   return (
  
         <Container className="  overflow-hidden ">
@@ -28,7 +35,7 @@ const QuizResult = () => {
         </h1>
         <h1 className='text-5xl font-bold  text-secondary'>
          <span className='text-green-500'>
-         10<span className="text-primary">/20</span>
+         {totalCorrectAnswers}<span className="text-primary">/20</span>
           </span>
         </h1>
 

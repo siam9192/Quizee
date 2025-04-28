@@ -1,5 +1,6 @@
 import React from 'react'
 import Container from '../container/Container'
+import { IQuizQuestion } from '../../types/question.type'
 
 const QuizQuitResult = () => {
   return (

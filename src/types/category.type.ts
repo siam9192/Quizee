@@ -1,12 +1,9 @@
-export type TAddCategory = {
-  id: number;
-  name: string;
-  hierarchyStr: string;
-};
-export interface IChoseCategory {
-  id: number;
-  name: string;
-  hierarchyStr: string;
-}
+import { IconType } from "react-icons/lib"
 
-export type TEditCategory = TAddCategory & { isDeleted?: boolean };
+export interface ICategory{
+  id:number
+      name:string,
+      description: string
+      themeColor: string
+      icon:IconType
+    }
