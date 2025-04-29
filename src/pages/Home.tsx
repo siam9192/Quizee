@@ -68,7 +68,7 @@ const Home = () => {
     </div>
     <div ref={ref} className="my-20 flex justify-center">
    
-   <QuizProccedButton timeMinutes={20} category={selectedCategory} difficulty={selectedDifficulty} totalQuestions={20}/>
+   <QuizProccedButton timeMinutes={20} category={selectedCategory} difficulty={selectedDifficulty} totalQuestions={10}/>
  
     </div>
     </Container>

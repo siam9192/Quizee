@@ -1,0 +1,19 @@
+export default {
+    questionAmount:20,
+    timeLimit:{
+        easy:10,
+        medium:15,
+        hard:20
+    },
+    pointForEach:{
+        easy:5,
+        medium:10,
+        hard:20
+    },
+    mode:["dark","light"],
+    difficulty:["easy","medium","hard"],
+    question:{
+        arriveAnimation:true
+    },
+    quitQuiz:true
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Container from '../component/container/Container';
@@ -6,7 +6,11 @@ import QuitQuizButton from '../component/ui/QuitQuizButton';
 import QuizResult from '../component/ui/QuizResult';
 import QuizTimeoutResult from '../component/ui/QuizTimeoutResult';
 
-import { IQuizQuestion } from '../types/question.type';
+import { IQuizQuestion, IRetrieveQuizQuestion } from '../types/question.type';
+import QuestionOptions from '../component/ui/QuestionOptions';
+import config from '../config';
+import {v4} from 'uuid'
+import { shuffleArray } from '../utils/constant';
 
 function QuizPage() {
   const [questions, setQuestions] = useState<IQuizQuestion[]>([]);
@@ -14,24 +18,46 @@ function QuizPage() {
   const [answers, setAnswers] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isQuestionsLoading, setIsQuestionsLoading] = useState(true);
-  const [isTimeout, setIsTimeout] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
+  const [status,setStatus] = useState<"error"|"ongoing"|'finished'|'timeout'>("ongoing");
+
 
   const navigate = useNavigate();
-
-  const optionsIndex = ['A', 'B', 'C', 'D'];
   const isFirstQuestion = currentQuestionIndex === 0;
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
+  const searchParams = new URLSearchParams(window.location.search);
+ 
 
   useEffect(() => {
-    fetch('https://opentdb.com/api.php?amount=20&category=26&difficulty=medium&type=multiple')
+    setIsLoading(true)
+    // Fetch questions
+    fetch(`https://opentdb.com/api.php?amount=${config.questionAmount}&category=${searchParams.get('category')}`)
       .then(async (res) => {
-        if (res.status !== 200) return;
+        
+        if (res.status !== 200) {
+          throw new Error()
+        };
         const data = await res.json();
-        setQuestions(data.results);
+       const results =  data.results as IRetrieveQuizQuestion[]
+      //  If api required amount of  result is not retrieve then throw an error 
+       if(results.length>config.questionAmount) throw new Error()
+        const formatResult:IQuizQuestion[]= results.map(_=>(
+          {
+            id:v4(),
+            category:_.category,
+            question:_.question,
+            options:shuffleArray([..._.correct_answer,_.incorrect_answers]) as string[],
+            correct_answer:_.correct_answer,
+          }    
+        ))
+        setQuestions(formatResult)
         setIsQuestionsLoading(false);
-      });
+      })
+      .catch ((err)=>{
+        setStatus("error")
+      })
   }, []);
+
+
 
   useEffect(() => {
     const handleBeforeUnload = (e: any) => {
@@ -79,11 +105,11 @@ function QuizPage() {
       </div>
     );
   }
+  // if (isFinished) return <QuizResult questions={questions} userAnswers={answers} />;
+  // if (isTimeout) return <QuizTimeoutResult />;
+console.log(questions)
 
-  if (isQuestionsLoading) return null;
-  if (isFinished) return <QuizResult questions={questions} userAnswers={answers} />;
-  if (isTimeout) return <QuizTimeoutResult />;
-
+return null
   return (
     <div className="py-10">
       <Container>
@@ -106,33 +132,16 @@ function QuizPage() {
           </p>
         </div>
 
-        <div className={`questions__container ${isLoading ? 'after:block' : 'after:hidden'}`}>
+        <div className={`questions__container dark:after:hidden ${isLoading ? 'after:block' : 'after:hidden'}`}>
           {questions.map((question, index) => {
-            const options = [...question.incorrect_answers, question.correct_answer];
-
+          
+         
             return index === currentQuestionIndex ? (
               <div key={index} className="mt-10 lg:mt-20 rounded-xl question">
                 <p className="text-center font-medium text-xl dark:text-gray-100">{question.question}</p>
 
                 <div className="mt-8 md:mt-14 grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-10">
-                  {options.map((option, optionIdx) => (
-                    <div
-                      key={optionIdx}
-                      onClick={() => handleSelectAnswer(index, option)}
-                      className={`px-3 py-4 border-2 rounded-lg flex gap-2 cursor-pointer 
-                        ${answers[index] === option
-                          ? 'bg-primary text-white border-primary'
-                          : 'bg-gray-50 dark:bg-dark-secondary border-primary'
-                        }`}
-                    >
-                      <p className="text-lg font-medium dark:text-gray-100">
-                        <span className={`${answers[index] === option ? 'text-white' : 'text-secondary'}`}>
-                          {optionsIndex[optionIdx]}.
-                        </span>{' '}
-                        {option}
-                      </p>
-                    </div>
-                  ))}
+                 <QuestionOptions options={[...question.incorrect_answers,question.correct_answer]} selectedAnswer={answers[index]} onSelect={(option)=>handleSelectAnswer(index,option)}/>
                 </div>
               </div>
             ) : null;

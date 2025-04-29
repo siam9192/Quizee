@@ -21,7 +21,7 @@ const QuizProccedButton = (props:IProps) => {
      "You have to get minimum 30% point to pass the quiz ",
        "Finish the quiz before the give time ends up otherwise you will consider as timeout ",
         "If you want you can quit the quiz at any time"
-  ];
+   ];
 
   useEffect(()=>{
     if(isOpen){
@@ -37,7 +37,7 @@ const QuizProccedButton = (props:IProps) => {
   const handelStartQuiz = ()=>{
     const searchParams =  new URLSearchParams()
     searchParams.append("category",(props.category!.id).toString()!)
-    searchParams.append("category",props.difficulty.toLowerCase()!)
+    searchParams.append("difficulty",props.difficulty.toLowerCase()!)
     navigate(`/quiz?${searchParams.toString()}`)
   }
 

@@ -1,4 +1,4 @@
-export interface IQuizQuestion {
+export interface IRetrieveQuizQuestion {
     
         type: "multiple" | "boolean"; // OpenTDB usually has "multiple" or "boolean"
         difficulty: "easy" | "medium" | "hard";
@@ -7,4 +7,21 @@ export interface IQuizQuestion {
         correct_answer: string;
         incorrect_answers: string[];
       
+}
+
+
+export interface IQuizQuestion {
+        id:string,
+        category: string;
+        question: string;
+        options:string[]
+        correct_answer: string;
+}
+
+
+type TOption  = {
+        A:string,
+        B:string,
+        C:string,
+        D:string
 }
