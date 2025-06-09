@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { IQuizQuestion } from '../../types/question.type';
+import { IQuestionAnswer, IQuizQuestion } from '../../types/question.type';
 interface IProps {
   questions:IQuizQuestion[],
-  userAnswers:string[]
+  userAnswers:IQuestionAnswer[]
 }
 
 const QuizResultAnswers = (props:IProps) => {
@@ -11,16 +11,16 @@ const QuizResultAnswers = (props:IProps) => {
     const quizAnswers = props.questions.map((q,index)=>(
         {
             question: q.question,
-            options: [q.incorrect_answers,q.correct_answer],
+            options: q.options,
             correctAnswer: q.correct_answer,
-            myAnswer: props.userAnswers[index]
+           answer: props.userAnswers.find(_=>_.id === q.id)!.option
         }
     ));
     
 
-  const optionsIndex:string[] = ["A","B","C","D"]
+ 
    const totalQuestions  = quizAnswers.length;
-   const totalCorrectAnswers  =  quizAnswers.filter(_=>_.correctAnswer === _.myAnswer).length
+   const totalCorrectAnswers  =  quizAnswers.filter(_=>_.correctAnswer === _.answer).length
   return (
   <>
     <button onClick={()=>setIsOpen(true)} className=' font-medium  text-secondary  border-b-2 border-secondary'>
@@ -54,8 +54,8 @@ const QuizResultAnswers = (props:IProps) => {
           {index+1}.</span> <span className='dark:text-gray-50'>{_.question}</span></p>
           <div className='mt-2'>
             <div className='space-y-3'>
-                <div className={`p-2  rounded-md  ${_.correctAnswer === _.myAnswer ?"p-2 bg-green-600 text-white" :"p-2  rounded-md bg-red-500 text-white"}`}>
-                <p >My Answer: <span > {_.myAnswer}</span></p>
+                <div className={`p-2  rounded-md  ${_.correctAnswer === _.answer ?"p-2 bg-green-600 text-white" :"p-2  rounded-md bg-red-500 text-white"}`}>
+                <p >My Answer: <span > {_.answer}</span></p>
                 </div>
                 <div className='p-2  rounded-md bg-primary text-white'>
                 <p>Correct Answer : {_.correctAnswer}</p>

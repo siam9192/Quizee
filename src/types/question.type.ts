@@ -25,3 +25,7 @@ type TOption  = {
         C:string,
         D:string
 }
+
+
+export interface IQuestionAnswer 
+        {id:string,option:string}

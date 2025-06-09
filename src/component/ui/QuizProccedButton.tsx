@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { EDifficulty, TDifficulty } from '../../types/util.type'
+import {TDifficulty } from '../../types/util.type'
 import { useNavigate } from 'react-router-dom'
 import { ICategory } from '../../types/category.type'
 
@@ -37,7 +37,7 @@ const QuizProccedButton = (props:IProps) => {
   const handelStartQuiz = ()=>{
     const searchParams =  new URLSearchParams()
     searchParams.append("category",(props.category!.id).toString()!)
-    searchParams.append("difficulty",props.difficulty.toLowerCase()!)
+    searchParams.append("difficulty",props.difficulty!)
     navigate(`/quiz?${searchParams.toString()}`)
   }
 

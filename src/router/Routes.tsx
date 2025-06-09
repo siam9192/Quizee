@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import QuizPage from "../pages/QuizPage";
 import RankingPage from "../pages/RankingPage";
 import ProfilePage from "../pages/ProfilePage";
+import QuizError from "../component/ui/QuizError";
 
 
 
@@ -12,6 +13,7 @@ const routes = [
   {
     path: "",
     element: <App />,
+    errorElement:<QuizError/>,
     children: [
       {
         path: "/",

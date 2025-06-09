@@ -1,4 +1,4 @@
-import { FaChevronDown } from "react-icons/fa"
+
 import Container from "../container/Container"
 import ThemeToggler from "../ui/ThemeToggler"
 

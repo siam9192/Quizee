@@ -1,13 +1,13 @@
 export default {
     questionAmount:20,
     timeLimit:{
+        easy:5*60,
+        medium:10*60,
+        hard:20*60
+    },
+    points:{
         easy:10,
         medium:15,
-        hard:20
-    },
-    pointForEach:{
-        easy:5,
-        medium:10,
         hard:20
     },
     mode:["dark","light"],

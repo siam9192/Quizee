@@ -49,7 +49,7 @@
 
 
 .question {
-  animation: next-questions-arrive  0.3s linear;
+  animation: question-arrive  1s ease-in;
 }
 
 
