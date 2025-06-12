@@ -182,7 +182,7 @@ useEffect(()=>{
   const formatTime = formatSeconds(remainingTime)
 
   return (
-    <div className="pt-10 py-10  ">
+    <div className="pt-10 py-10 ">
       <Container>
         <div className="size-fit mx-auto text-center space-y-2">
           <h2 className="text-xl font-medium dark:text-gray-100">
